@@ -1,0 +1,13 @@
+{% load static %}
+
+<nav class='navbar'>
+    <div class='nav-items'><a href="{% url 'home' %}">Home</a></div>
+    <div class='nav-items'>Category</div>
+    {% if user.is_authenticated %}
+        <div class='nav-item'><a href="{% url 'logout' %}">Logout</a></div>
+    {% else %}
+        <div class='nav-items'><a href="{% url 'login-page' %}">Login</a></div>
+        <div class='nav-items'><a href="{% url 'register-page' %}">Register</a></div>
+    {% endif %}
+    <div class='nav-items'>Cart</div>
+</nav>

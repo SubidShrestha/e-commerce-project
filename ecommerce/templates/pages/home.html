@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <p>Welcome {{ user.first_name }} {{ user.last_name }}</p>
+{% endif %}
+    <div class='container'>
+        {% for product in products %}
+            <div class='items'>
+                <img src={{product.image.url}} alt="" class='product-image'>
+                <div style="font-size:22px; font-weight: bold;padding:5px;">Product: {{product.name}}</div>
+                <div style="padding: 5px;">Category: {{product.category}}</div>
+                <div style="color: orange; font-size: 18px;padding:5px;">Price: {{product.price}}</div>
+                <button class='cart-button'>Add to Cart</button>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
