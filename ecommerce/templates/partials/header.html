@@ -1,13 +1,44 @@
 {% load static %}
 
+<style>
+    a:link, a:visited{
+        text-decoration:none;
+        color:white;
+    }
+
+    a:hover{
+        color: yellow;
+    }
+
+    
+
+</style>
+
 <nav class='navbar'>
-    <div class='nav-items'><a href="{% url 'home' %}">Home</a></div>
-    <div class='nav-items'>Category</div>
+    <div class='nav-items'>
+        <a href="{% url 'home' %}">Home</a>
+    </div>
+    <div class='nav-items'>
+        Category
+    </div>
     {% if user.is_authenticated %}
-        <div class='nav-item'><a href="{% url 'logout' %}">Logout</a></div>
+    <div class='nav-item'>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
     {% else %}
-        <div class='nav-items'><a href="{% url 'login-page' %}">Login</a></div>
-        <div class='nav-items'><a href="{% url 'register-page' %}">Register</a></div>
+    <div class='nav-items'>
+        <a href="{% url 'login-page' %}">Login</a>
+    </div>
+    <div class='nav-items'>
+        <a href="{% url 'register-page' %}">Register</a>
+    </div>
     {% endif %}
-    <div class='nav-items'>Cart</div>
+    <div class='nav-items'>
+        Cart
+    </div>
+    <h1 style="margin-left:auto; margin-right:auto;font-size: 30px;">E-commerce Project</h1>
+    <div class="nav-items searchbar">
+        <input type="text" placeholder="Search Here..." style="margin-left:20px;height:30px; border-radius: 3px; width: 400px;"/>
+        <input type="submit" value="Search" style="margin-right:auto; height:32px; border-radius: 3px; width: 100px; "/>
+    </div>
 </nav>

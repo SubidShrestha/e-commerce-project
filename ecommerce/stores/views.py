@@ -10,6 +10,13 @@ def getProducts(request):
     }
     return render(request,"pages/home.html",context)
 
+def viewCart(request):
+    cart = Cart.objects.filter(user = request.user.id)
+    context={
+        "carts" : cart
+    }
+    return HttpResponse(context)
+
 def LoginPage(request):
     if request.method =='POST':
         email = request.POST['email']

@@ -46,8 +46,11 @@
 }
 
 .navbar .nav-items:hover{
-    color: yellow;
-    text-decoration: underline;
+    color:yellow;
+}
+
+.navbar .searchbar{
+    margin-right:auto;
 }
 
 .cart-button{
@@ -61,6 +64,3 @@
     color: white;
 }
 
-a:link{
-    text-decoration: none;
-}

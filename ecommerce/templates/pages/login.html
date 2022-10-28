@@ -2,24 +2,65 @@
 {% load static %}
 {% block content %}
 
-    <div>
-        <div>
-            <form action="" method='POST'>
-                {% csrf_token %}
-                <div>
-                    <label for="email">Email: </label>
-                    <input type="text" id='email' name='email' />
-                </div>
-                <div>
-                    <label for="password">Password: </label>
-                    <input type="password" id='password' name='password' />
-                </div>
-                <div>
-                    <input type='submit' value='Login' />
-                </div>
-            </form>
-            Need an Account? <a href="#">Register here</a>
-        </div>
-    </div>
+<style>
+    .container{
+        display: block;
+        text-align: center;
+    }
+    
+    form{
+        display: inline-block;
+        text-align: center;
+        width: 600px;
+        margin-top: 60px;
+        padding-bottom: 10px;
+        border: 1px solid;
+        border-radius: 10px;
+    }
+
+    p{
+        font-size: 20px;
+    }
+
+    input{
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    input[type=text], input[type=password]{
+        border-radius: 3px;
+    }
+
+    input[type=submit]{
+        background-color:#4f86f7;
+        color: white;
+        border: none;
+        border-radius: 3px;
+    }
+
+    .div-link:link, .div-link:visited{
+        color: blue;
+        text-decoration:none;
+    }
+
+</style>
+            <div class="container">
+                <form action="" method='POST'>
+                    <p>Welcome to E-commerce Site</p>
+                    {% csrf_token %}
+                        <div>
+                            <input type="text" id='email' name='email' placeholder= "Enter email address..." required/>
+                        </div>
+                        <div>
+                            <input type="password" id='password' name='password' placeholder= "Enter Password..." required />
+                        </div>
+                        <div>
+                            <input type='submit' value='Login' />
+                        </div>
+                        Need an Account? <a href="{% url 'register-page' %}" class="div-link">Register here</a>
+                </form>
+            </div>
 
 {% endblock %}
