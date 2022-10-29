@@ -40,7 +40,7 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart=models.ForeignKey(Cart,on_delete=models.CASCADE,null=False)
     product=models.ForeignKey(Product,on_delete=models.CASCADE,null=False)
-    quantity=models.IntegerField(default=1)
+    quantity=models.IntegerField(default=0)
 
     @property
     def total(self):
@@ -48,9 +48,15 @@ class CartItem(models.Model):
         return amount
 
 class ShippingLocation(models.Model):
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    cart = models.OneToOneField(Cart,on_delete=models.SET_NULL,null=True,blank=True)
     city=models.CharField(max_length=26,null=False)
     state=models.CharField(max_length=26,null=False)
     location=models.CharField(max_length=26,null=False)
     delivery_status=models.BooleanField(default=False)
     date_added=models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        loc = self.location + ", " + self.city + ", " + self.state
+        return loc
     

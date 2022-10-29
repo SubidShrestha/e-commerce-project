@@ -11,8 +11,8 @@
                 <img src={{product.image.url}} alt="" class='product-image'>
                 <div style="font-size:22px; font-weight: bold;padding:5px;">Product: {{product.name}}</div>
                 <div style="padding: 5px;">Category: {{product.category}}</div>
-                <div style="color: orange; font-size: 18px;padding:5px;">Price: {{product.price}}</div>
-                <button class='cart-button'>Add to Cart</button>
+                <div style="color: #FF8C00; font-size: 18px;padding:5px;">Price: {{product.price}}</div>
+                <button data-product={{product.id}} data-user={{request.user}} data-action="add" class="cart-button">Add to Cart</button>
             </div>
         {% endfor %}
     </div>
