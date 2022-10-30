@@ -5,6 +5,7 @@ from users.forms import CustomUserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 import json
+import requests
 
 def getProducts(request):
     product = Product.objects.all()
@@ -57,21 +58,53 @@ def createCartItem(request):
 @login_required(login_url='login-page')
 def checkout(request):
     user = User.objects.get(id = request.user.id)
-    cart = Cart.objects.filter(user = user)
+    cart,created = Cart.objects.get_or_create(user= user, status = False)
     if request.method == 'POST':
         city_data=request.POST['city']
         location_data=request.POST['location']
         state_data=request.POST['state']
-
-        if city_data and location_data and state_data:
-            ShippingLocation.objects.create(user = user,cart=cart[0],city = city_data, location= location_data, state = state_data,delivery_status=False)
+        cart_data=request.POST['cart']
+        cart_instance = Cart.objects.get(id=cart_data)
+        if city_data and location_data and state_data and cart_instance:
+            ShippingLocation.objects.create(user = user,cart=cart_instance,city = city_data, location= location_data, state = state_data,delivery_status=False)
             return redirect('payment')
 
-    return render(request,"pages/checkout.html",{})
+    return render(request,"pages/checkout.html",{"cart":cart})
 
 @login_required(login_url='login-page')
 def payment(request):
-    return render(request,"pages/payment.html",{})
+    user = User.objects.get(id = request.user.id)
+    cart,created = Cart.objects.get_or_create(user= user, status = False)
+
+    return render(request,"pages/payment.html",{"cart":cart})
+
+def esewaverify(request):
+        import xml.etree.ElementTree as ET
+        oid = request.GET.get("oid")
+        amt = request.GET.get("amt")
+        refId = request.GET.get("refId")
+
+        url = "https://uat.esewa.com.np/epay/transrec"
+        d = {
+            'amt': amt,
+            'scd': 'epay_payment',
+            'rid': refId,
+            'pid': oid,
+        }
+        resp = requests.post(url, d)
+        root = ET.fromstring(resp.content)
+        status = root[0].text.strip()
+
+        order_id = oid.split("_")[1]
+        order_obj = Cart.objects.get(id=order_id)
+        if status == "Success":
+            order_obj.status = True
+            order_obj.save()
+            return redirect("/")
+        else:
+            return redirect("/payment/")
+
+
 
 def LoginPage(request):
     next = request.GET.get('next')

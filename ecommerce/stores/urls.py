@@ -9,6 +9,7 @@ urlpatterns = [
     path('addToCart',createCartItem,name='addToCart'),
     path('checkout',checkout,name='checkout'),
     path('payment',payment,name='payment'),
+    path('esewaverify',esewaverify,name='esewaverify'),
     path('register',register,name='register-page'),
     path('logout',LogoutPage,name='logout'),
 ]
